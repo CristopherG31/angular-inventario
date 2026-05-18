@@ -49,4 +49,6 @@ export class ProductoService {
       `${this.apiUrl}/productos/${id}`
     );
   }
+  
 }
+console.log('🚀 NUEVO BUILD API:', environment.apiUrl);
