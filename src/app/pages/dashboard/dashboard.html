@@ -1,0 +1,63 @@
+<div class="container mt-4">
+
+  <h2 class="mb-4">📊 Dashboard</h2>
+
+  <div class="row">
+
+    <!-- Productos -->
+    <div class="col-md-3 mb-3">
+      <div class="card text-white bg-primary shadow">
+        <div class="card-body">
+          <h5>Productos</h5>
+          <h2>{{ data.total_productos }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ventas -->
+    <div class="col-md-3 mb-3">
+      <div class="card text-white bg-success shadow">
+        <div class="card-body">
+          <h5>Ventas</h5>
+          <h2>{{ data.ventas_hoy }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ingresos -->
+    <div class="col-md-3 mb-3">
+      <div class="card text-white bg-warning shadow">
+        <div class="card-body">
+          <h5>Ingresos</h5>
+          <h2>${{ data.ingresos_hoy }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stock bajo -->
+    <div class="col-md-3 mb-3">
+      <div class="card text-white bg-danger shadow">
+        <div class="card-body">
+          <h5>Stock Bajo</h5>
+          <h2>{{ data.stock_bajo }}</h2>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Sección extra pro -->
+  <div class="card mt-4 shadow">
+    <div class="card-body">
+
+      <h5>📈 Estado del sistema</h5>
+
+      <p class="mb-1">✔ Inventario activo</p>
+      <p class="mb-1">✔ Ventas funcionando</p>
+      <p class="mb-1">✔ API conectada</p>
+      <p class="mb-1">✔ Angular 21 + Laravel</p>
+
+    </div>
+  </div>
+
+</div>

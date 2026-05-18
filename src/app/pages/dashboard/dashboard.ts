@@ -1,0 +1,34 @@
+import { Component, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { DashboardService } from '../../core/services/dashboard';
+
+@Component({
+  selector: 'app-dashboard',
+  imports: [CommonModule],
+  templateUrl: './dashboard.html',
+  styleUrl: './dashboard.scss'
+})
+export class Dashboard implements OnInit {
+
+  private dashboardService = inject(DashboardService);
+
+  data: any = {
+    total_productos: 0,
+    ventas_hoy: 0,
+    ingresos_hoy: 0,
+    stock_bajo: 0
+  };
+
+  ngOnInit(): void {
+
+    // 🚀 iniciar auto refresh
+    this.dashboardService.iniciarAutoRefresh(10);
+
+    // 📡 escuchar cambios
+    this.dashboardService.dashboard$
+      .subscribe(data => {
+        this.data = data;
+      });
+  }
+}

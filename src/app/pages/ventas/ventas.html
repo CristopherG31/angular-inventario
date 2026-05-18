@@ -1,0 +1,149 @@
+<div class="container mt-4">
+
+  <h2 class="mb-4">Punto de Venta</h2>
+
+  <div class="row">
+
+    <!-- 🟦 PRODUCTOS -->
+    <div class="col-md-7">
+
+      <h4>Productos</h4>
+
+      <table class="table table-bordered table-hover">
+
+        <thead class="table-dark">
+          <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          @for (p of productos; track p.id) {
+
+            <tr>
+
+              <td>{{ p.nombre }}</td>
+
+              <td>${{ p.precio_venta }}</td>
+
+              <td>{{ p.stock }}</td>
+
+              <td>
+
+                <button
+                  class="btn btn-primary btn-sm"
+                  (click)="agregar(p)"
+                >
+                  Agregar
+                </button>
+
+              </td>
+
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+    <!-- 🟩 CARRITO -->
+    <div class="col-md-5">
+
+      <h4>Carrito</h4>
+
+      <div class="card p-3 shadow-sm">
+
+        <!-- Cliente -->
+        <input
+          class="form-control mb-2"
+          placeholder="Cliente"
+          [(ngModel)]="cliente"
+        >
+
+        <!-- Método pago -->
+        <select
+          class="form-control mb-3"
+          [(ngModel)]="metodo_pago"
+        >
+
+          <option value="efectivo">Efectivo</option>
+          <option value="tarjeta">Tarjeta</option>
+          <option value="transferencia">Transferencia</option>
+
+        </select>
+
+        <!-- Items carrito -->
+        <div *ngFor="let item of carrito; let i = index" class="mb-2">
+
+          <div class="d-flex justify-content-between">
+
+  <div class="d-flex justify-content-between align-items-center">
+
+  <div>
+    {{ item.nombre }}
+    x{{ item.cantidad }}
+  </div>
+
+  <div>
+
+    <button
+      class="btn btn-sm btn-secondary me-1"
+      (click)="disminuir(item)"
+    >
+      -
+    </button>
+
+    <button
+      class="btn btn-sm btn-danger"
+      (click)="quitar(i)"
+    >
+      X
+    </button>
+
+  </div>
+
+</div>
+            <div>
+              ${{ item.precio * item.cantidad }}
+            </div>
+
+            <button
+              class="btn btn-danger btn-sm"
+              (click)="quitar(i)"
+            >
+              X
+            </button>
+
+          </div>
+
+        </div>
+
+        <hr>
+
+        <!-- Total -->
+        <h5>
+          Total: ${{ total }}
+        </h5>
+
+        <!-- Botón vender -->
+        <button
+          class="btn btn-success w-100 mt-2"
+          (click)="vender()"
+        >
+          Finalizar Venta
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,179 @@
+<div class="container mt-5">
+
+  <h2 class="mb-4">
+    Productos
+  </h2>
+
+  <div class="card shadow mb-4">
+
+    <div class="card-body">
+
+      <h4>
+        {{
+          modoEdicion
+          ? 'Editar Producto'
+          : 'Nuevo Producto'
+        }}
+      </h4>
+
+      <div class="row">
+
+        <div class="col-md-3 mb-2">
+          <input
+            class="form-control"
+            placeholder="Código"
+            [(ngModel)]="nuevoProducto.codigo"
+          >
+        </div>
+
+        <div class="col-md-3 mb-2">
+          <input
+            class="form-control"
+            placeholder="Nombre"
+            [(ngModel)]="nuevoProducto.nombre"
+          >
+        </div>
+
+        <div class="col-md-6 mb-2">
+          <input
+            class="form-control"
+            placeholder="Descripción"
+            [(ngModel)]="nuevoProducto.descripcion"
+          >
+        </div>
+
+        <div class="col-md-3 mb-2">
+          <input
+            class="form-control"
+            placeholder="Precio compra"
+            type="number"
+            [(ngModel)]="nuevoProducto.precio_compra"
+          >
+        </div>
+
+        <div class="col-md-3 mb-2">
+          <input
+            class="form-control"
+            placeholder="Precio venta"
+            type="number"
+            [(ngModel)]="nuevoProducto.precio_venta"
+          >
+        </div>
+
+        <div class="col-md-3 mb-2">
+          <input
+            class="form-control"
+            placeholder="Stock"
+            type="number"
+            [(ngModel)]="nuevoProducto.stock"
+          >
+        </div>
+
+        <div class="col-md-3 mb-2">
+          <button
+            class="btn btn-success w-100"
+            (click)="guardarProducto()"
+          >
+
+            {{
+              modoEdicion
+              ? 'Actualizar'
+              : 'Guardar'
+            }}
+
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="card shadow">
+
+    <div class="card-body table-responsive">
+
+      <table class="table table-bordered table-hover">
+
+        <thead class="table-dark">
+
+          <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Categoría</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Acciones</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          @for (
+            producto of productos;
+            track producto.id
+          ) {
+
+            <tr>
+
+              <td>
+                {{ producto.codigo }}
+              </td>
+
+              <td>
+                {{ producto.nombre }}
+              </td>
+
+              <td>
+                {{ producto.descripcion }}
+              </td>
+
+              <td>
+                {{
+                  producto.categoria?.nombre
+                }}
+              </td>
+
+              <td>
+                $
+                {{ producto.precio_venta }}
+              </td>
+
+              <td>
+                {{ producto.stock }}
+              </td>
+
+              <td>
+
+                <button
+                  class="btn btn-warning btn-sm me-2"
+                  (click)="editarProducto(producto)"
+                >
+                  Editar
+                </button>
+
+                <button
+                  class="btn btn-danger btn-sm"
+                  (click)="eliminarProducto(producto.id)"
+                >
+                  Eliminar
+                </button>
+
+              </td>
+
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
