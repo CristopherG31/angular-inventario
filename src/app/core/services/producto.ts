@@ -9,12 +9,11 @@ export class ProductoService {
 
   private http = inject(HttpClient);
 
-  // 👉 IMPORTANTE:
-  // aquí YA incluye /api
+  // ⚠️ DEBE SER TU URL DE RAILWAY CON /api
   private apiUrl = environment.apiUrl;
 
   // =====================
-  // OBTENER PRODUCTOS
+  // GET PRODUCTOS
   // =====================
   getProductos() {
     return this.http.get<any[]>(
@@ -23,7 +22,7 @@ export class ProductoService {
   }
 
   // =====================
-  // CREAR PRODUCTO
+  // CREATE
   // =====================
   crearProducto(data: any) {
     return this.http.post(
@@ -33,7 +32,7 @@ export class ProductoService {
   }
 
   // =====================
-  // ACTUALIZAR PRODUCTO
+  // UPDATE
   // =====================
   actualizarProducto(id: number, data: any) {
     return this.http.put(
@@ -43,12 +42,11 @@ export class ProductoService {
   }
 
   // =====================
-  // ELIMINAR PRODUCTO
+  // DELETE
   // =====================
   eliminarProducto(id: number) {
     return this.http.delete(
       `${this.apiUrl}/productos/${id}`
     );
   }
-  
 }

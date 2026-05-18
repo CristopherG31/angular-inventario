@@ -1,7 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { ProductoService } from '../../core/services/producto';
 
 @Component({
@@ -40,31 +39,33 @@ export class ProductosComponent implements OnInit {
   }
 
   // ======================
-  // CARGAR PRODUCTOS
+  // GET
   // ======================
   cargarProductos() {
     this.productoService.getProductos().subscribe({
-      next: (response: any) => {
-        console.log('PRODUCTOS API:', response);
-        this.productos = response;
+      next: (res: any) => {
+        console.log('✅ PRODUCTOS API:', res);
+        this.productos = res;
       },
-      error: (error) => {
-        console.error('ERROR GET PRODUCTOS:', error);
+      error: (err) => {
+        console.error('❌ ERROR GET:', err);
       }
     });
   }
 
   // ======================
-  // GUARDAR (CREAR / EDITAR)
+  // GUARDAR
   // ======================
   guardarProducto() {
-    this.modoEdicion
-      ? this.actualizarProducto()
-      : this.crearProducto();
+    if (this.modoEdicion) {
+      this.actualizarProducto();
+    } else {
+      this.crearProducto();
+    }
   }
 
   // ======================
-  // CREAR
+  // CREATE
   // ======================
   crearProducto() {
     this.productoService.crearProducto(this.nuevoProducto).subscribe({
@@ -73,14 +74,14 @@ export class ProductosComponent implements OnInit {
         this.cargarProductos();
         this.limpiarFormulario();
       },
-      error: (error) => {
-        console.error('ERROR CREATE:', error);
+      error: (err) => {
+        console.error('❌ ERROR CREATE:', err);
       }
     });
   }
 
   // ======================
-  // EDITAR
+  // EDIT
   // ======================
   editarProducto(producto: any) {
     this.modoEdicion = true;
@@ -100,7 +101,7 @@ export class ProductosComponent implements OnInit {
   }
 
   // ======================
-  // ACTUALIZAR
+  // UPDATE
   // ======================
   actualizarProducto() {
     if (!this.productoId) return;
@@ -115,14 +116,14 @@ export class ProductosComponent implements OnInit {
           this.productoId = null;
           this.limpiarFormulario();
         },
-        error: (error) => {
-          console.error('ERROR UPDATE:', error);
+        error: (err) => {
+          console.error('❌ ERROR UPDATE:', err);
         }
       });
   }
 
   // ======================
-  // ELIMINAR
+  // DELETE
   // ======================
   eliminarProducto(id: number) {
     if (!confirm('¿Eliminar producto?')) return;
@@ -132,14 +133,14 @@ export class ProductosComponent implements OnInit {
         alert('Producto eliminado 😎');
         this.cargarProductos();
       },
-      error: (error) => {
-        console.error('ERROR DELETE:', error);
+      error: (err) => {
+        console.error('❌ ERROR DELETE:', err);
       }
     });
   }
 
   // ======================
-  // LIMPIAR FORM
+  // RESET FORM
   // ======================
   limpiarFormulario() {
     this.nuevoProducto = {
