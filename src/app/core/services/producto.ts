@@ -8,42 +8,47 @@ import { environment } from '../../../environments/environment';
 export class ProductoService {
 
   private http = inject(HttpClient);
+
+  // 👉 IMPORTANTE:
+  // aquí YA incluye /api
   private apiUrl = environment.apiUrl;
 
-  // Obtener productos
+  // =====================
+  // OBTENER PRODUCTOS
+  // =====================
   getProductos() {
-
-    return this.http.get(
+    return this.http.get<any[]>(
       `${this.apiUrl}/productos`
     );
   }
 
-  // Crear producto
+  // =====================
+  // CREAR PRODUCTO
+  // =====================
   crearProducto(data: any) {
-
     return this.http.post(
       `${this.apiUrl}/productos`,
       data
     );
   }
 
-  //eliminar producto
+  // =====================
+  // ACTUALIZAR PRODUCTO
+  // =====================
+  actualizarProducto(id: number, data: any) {
+    return this.http.put(
+      `${this.apiUrl}/productos/${id}`,
+      data
+    );
+  }
+
+  // =====================
+  // ELIMINAR PRODUCTO
+  // =====================
   eliminarProducto(id: number) {
-
-  return this.http.delete(
-    `${this.apiUrl}/productos/${id}`
-  );
-}
-
-//EDITAR PRODUCTO
-actualizarProducto(
-  id: number,
-  data: any
-) {
-
-  return this.http.put(
-    `${this.apiUrl}/productos/${id}`,
-    data
-  );
-}
+    return this.http.delete(
+      `${this.apiUrl}/productos/${id}`
+    );
+  }
+  
 }

@@ -1,17 +1,12 @@
-import {
-  Component,
-  inject,
-  OnInit
-} from '@angular/core';
-
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { ProductoService }
-from '../../core/services/producto';
+import { ProductoService } from '../../core/services/producto';
 
 @Component({
   selector: 'app-productos',
+  standalone: true,
   imports: [
     CommonModule,
     FormsModule
@@ -19,11 +14,9 @@ from '../../core/services/producto';
   templateUrl: './productos.html',
   styleUrl: './productos.scss'
 })
-export class Productos
-implements OnInit {
+export class ProductosComponent implements OnInit {
 
-  private productoService =
-    inject(ProductoService);
+  private productoService = inject(ProductoService);
 
   productos: any[] = [];
 
@@ -46,204 +39,109 @@ implements OnInit {
     this.cargarProductos();
   }
 
-  // Cargar productos
+  // ======================
+  // CARGAR PRODUCTOS
+  // ======================
   cargarProductos() {
-
-    this.productoService
-      .getProductos()
-      .subscribe({
-
-        next: (
-          response: any
-        ) => {
-
-          console.log(
-            'PRODUCTOS API',
-            response
-          );
-
-          this.productos =
-            response;
-        },
-
-        error: (
-          error: any
-        ) => {
-
-          console.error(
-            error
-          );
-        }
-      });
+    this.productoService.getProductos().subscribe({
+      next: (response: any) => {
+        console.log('PRODUCTOS API:', response);
+        this.productos = response;
+      },
+      error: (error) => {
+        console.error('ERROR GET PRODUCTOS:', error);
+      }
+    });
   }
 
-  // Decide si crear o editar
+  // ======================
+  // GUARDAR (CREAR / EDITAR)
+  // ======================
   guardarProducto() {
-
-    if (
-      this.modoEdicion
-    ) {
-
-      this.actualizarProducto();
-
-    } else {
-
-      this.crearProducto();
-    }
+    this.modoEdicion
+      ? this.actualizarProducto()
+      : this.crearProducto();
   }
 
-  // Crear producto
+  // ======================
+  // CREAR
+  // ======================
   crearProducto() {
-
-    this.productoService
-      .crearProducto(
-        this.nuevoProducto
-      )
-      .subscribe({
-
-        next: () => {
-
-          alert(
-            'Producto creado 😎'
-          );
-
-          this.cargarProductos();
-
-          this.limpiarFormulario();
-        },
-
-        error: (
-          error: any
-        ) => {
-
-          console.error(
-            error
-          );
-        }
-      });
+    this.productoService.crearProducto(this.nuevoProducto).subscribe({
+      next: () => {
+        alert('Producto creado 😎');
+        this.cargarProductos();
+        this.limpiarFormulario();
+      },
+      error: (error) => {
+        console.error('ERROR CREATE:', error);
+      }
+    });
   }
 
-  // Editar producto
-  editarProducto(
-    producto: any
-  ) {
-
-    this.modoEdicion =
-      true;
-
-    this.productoId =
-      producto.id;
+  // ======================
+  // EDITAR
+  // ======================
+  editarProducto(producto: any) {
+    this.modoEdicion = true;
+    this.productoId = producto.id;
 
     this.nuevoProducto = {
-
-      codigo:
-        producto.codigo,
-
-      nombre:
-        producto.nombre,
-
-      descripcion:
-        producto.descripcion,
-
-      categoria_id:
-        producto.categoria_id,
-
-      precio_compra:
-        producto.precio_compra,
-
-      precio_venta:
-        producto.precio_venta,
-
-      stock:
-        producto.stock,
-
-      stock_minimo:
-        producto.stock_minimo,
-
-      estado:
-        producto.estado
+      codigo: producto.codigo,
+      nombre: producto.nombre,
+      descripcion: producto.descripcion,
+      categoria_id: producto.categoria_id,
+      precio_compra: producto.precio_compra,
+      precio_venta: producto.precio_venta,
+      stock: producto.stock,
+      stock_minimo: producto.stock_minimo,
+      estado: producto.estado
     };
   }
 
-  // Actualizar producto
+  // ======================
+  // ACTUALIZAR
+  // ======================
   actualizarProducto() {
+    if (!this.productoId) return;
 
     this.productoService
-      .actualizarProducto(
-        this.productoId!,
-        this.nuevoProducto
-      )
+      .actualizarProducto(this.productoId, this.nuevoProducto)
       .subscribe({
-
         next: () => {
-
-          alert(
-            'Producto actualizado 😎'
-          );
-
+          alert('Producto actualizado 😎');
           this.cargarProductos();
-
-          this.modoEdicion =
-            false;
-
-          this.productoId =
-            null;
-
+          this.modoEdicion = false;
+          this.productoId = null;
           this.limpiarFormulario();
         },
-
-        error: (
-          error: any
-        ) => {
-
-          console.error(
-            error
-          );
+        error: (error) => {
+          console.error('ERROR UPDATE:', error);
         }
       });
   }
 
-  // Eliminar producto
-  eliminarProducto(
-    id: number
-  ) {
+  // ======================
+  // ELIMINAR
+  // ======================
+  eliminarProducto(id: number) {
+    if (!confirm('¿Eliminar producto?')) return;
 
-    const confirmar =
-      confirm(
-        '¿Eliminar producto?'
-      );
-
-    if (
-      !confirmar
-    ) return;
-
-    this.productoService
-      .eliminarProducto(id)
-      .subscribe({
-
-        next: () => {
-
-          alert(
-            'Producto eliminado 😎'
-          );
-
-          this.cargarProductos();
-        },
-
-        error: (
-          error: any
-        ) => {
-
-          console.error(
-            error
-          );
-        }
-      });
+    this.productoService.eliminarProducto(id).subscribe({
+      next: () => {
+        alert('Producto eliminado 😎');
+        this.cargarProductos();
+      },
+      error: (error) => {
+        console.error('ERROR DELETE:', error);
+      }
+    });
   }
 
-  // Limpiar formulario
+  // ======================
+  // LIMPIAR FORM
+  // ======================
   limpiarFormulario() {
-
     this.nuevoProducto = {
       codigo: '',
       nombre: '',
