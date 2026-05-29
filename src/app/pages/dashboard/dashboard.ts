@@ -24,7 +24,7 @@ export class Dashboard implements OnInit {
   ngOnInit(): void {
 
     // 🚀 iniciar auto refresh
-    this.dashboardService.iniciarAutoRefresh(10);
+    this.dashboardService.iniciarAutoRefresh(5);
 
     // 📡 escuchar cambios
     this.dashboardService.dashboard$

@@ -28,10 +28,10 @@ export class ProductosComponent implements OnInit {
     nombre: '',
     descripcion: '',
     categoria_id: 1,
-    precio_compra: 0,
-    precio_venta: 0,
-    stock: 0,
-    stock_minimo: 0,
+    precio_compra: null,
+    precio_venta: null,
+    stock: null,
+    stock_minimo: null,
     estado: true
   };
 
@@ -150,10 +150,10 @@ export class ProductosComponent implements OnInit {
       nombre: '',
       descripcion: '',
       categoria_id: 1,
-      precio_compra: 0,
-      precio_venta: 0,
-      stock: 0,
-      stock_minimo: 0,
+      precio_compra: null,
+      precio_venta: null,
+      stock: null,
+      stock_minimo: null,
       estado: true
     };
   }
