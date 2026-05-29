@@ -41,7 +41,23 @@
             [(ngModel)]="nuevoProducto.descripcion"
           >
         </div>
+<div class="col-md-3 mb-2">
+  <select
+    class="form-select"
+    [(ngModel)]="nuevoProducto.categoria_id"
+  >
+    <option [value]="null" disabled>
+      Seleccionar categoría
+    </option>
 
+    <option
+      *ngFor="let categoria of categorias"
+      [value]="categoria.id"
+    >
+      {{ categoria.nombre }}
+    </option>
+  </select>
+</div>
         <div class="col-md-3 mb-2">
           <input
             class="form-control"

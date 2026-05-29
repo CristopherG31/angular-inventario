@@ -2,6 +2,7 @@ import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductoService } from '../../core/services/producto';
+import { CategoriaService } from '../../core/services/categoria';
 
 @Component({
   selector: 'app-productos',
@@ -17,8 +18,10 @@ export class ProductosComponent implements OnInit {
 
   private productoService = inject(ProductoService);
   private cdr = inject(ChangeDetectorRef);
+  private categoriaService = inject(CategoriaService);
 
   productos: any[] = [];
+  categorias: any[] = [];
 
   modoEdicion = false;
   productoId: number | null = null;
@@ -37,6 +40,7 @@ export class ProductosComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarProductos();
+    this.cargarCategorias();
   }
 
   // ======================
@@ -54,7 +58,21 @@ export class ProductosComponent implements OnInit {
       }
     });
   }
+cargarCategorias() {
 
+  this.categoriaService
+    .getCategorias()
+    .subscribe({
+
+      next: (res: any) => {
+        this.categorias = res;
+      },
+
+      error: (err) => {
+        console.error(err);
+      }
+    });
+}
   // ======================
   // GUARDAR
   // ======================
