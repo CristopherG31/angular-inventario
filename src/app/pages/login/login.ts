@@ -26,9 +26,13 @@ export class Login {
 
     this.authService.login(data)
       .subscribe({
-        next: (response) => {
+        next: (response: any) => {
           console.log(response);
-          this.router.navigate(['/dashboard']);
+            // Guardar token
+  localStorage.setItem('token', response.token);
+
+  // Ir al dashboard
+  this.router.navigate(['/dashboard']);
         },
 
         error: (error) => {

@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -8,4 +8,17 @@ import { RouterModule } from '@angular/router';
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss'
 })
-export class Navbar {}
+export class Navbar {
+
+  private router = inject(Router);
+
+  logout() {
+
+    // borrar token
+    localStorage.removeItem('token');
+
+    // regresar al login
+    this.router.navigate(['/']);
+  }
+
+}

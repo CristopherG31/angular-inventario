@@ -4,6 +4,7 @@ import { Dashboard } from './pages/dashboard/dashboard';
 import { ProductosComponent } from './pages/productos/productos';
 import { Categorias } from './pages/categorias/categorias';
 import { Ventas } from './pages/ventas/ventas';
+import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
   {
@@ -12,19 +13,23 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
-    component: Dashboard
+    component: Dashboard,
+    canActivate: [authGuard]
   },
   {
   path: 'productos',
-  component: ProductosComponent
+  component: ProductosComponent,
+  canActivate: [authGuard]
 },
 {
   path: 'categorias',
-  component: Categorias
+  component: Categorias,
+  canActivate: [authGuard]
 },
 
 {
   path: 'ventas',
-  component: Ventas
+  component: Ventas,
+  canActivate: [authGuard]
 }
 ];

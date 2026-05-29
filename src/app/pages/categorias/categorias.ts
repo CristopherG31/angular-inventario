@@ -1,14 +1,14 @@
 import {
   Component,
   inject,
-  OnInit
+  OnInit, ChangeDetectorRef
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { CategoriaService }
-from '../../core/services/categoria';
+  from '../../core/services/categoria';
 
 @Component({
   selector: 'app-categorias',
@@ -20,10 +20,12 @@ from '../../core/services/categoria';
   styleUrl: './categorias.scss'
 })
 export class Categorias
-implements OnInit {
+  implements OnInit {
 
   private categoriaService =
     inject(CategoriaService);
+    private cdr =
+  inject(ChangeDetectorRef);
 
   categorias: any[] = [];
 
@@ -53,6 +55,8 @@ implements OnInit {
 
           this.categorias =
             response;
+              // refrescar vista
+  this.cdr.detectChanges();
         },
 
         error: (
@@ -215,5 +219,5 @@ implements OnInit {
     };
   }
 
-  
+
 }

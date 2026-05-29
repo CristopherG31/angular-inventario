@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductoService } from '../../core/services/producto';
@@ -16,6 +16,7 @@ import { ProductoService } from '../../core/services/producto';
 export class ProductosComponent implements OnInit {
 
   private productoService = inject(ProductoService);
+  private cdr = inject(ChangeDetectorRef);
 
   productos: any[] = [];
 
@@ -46,6 +47,7 @@ export class ProductosComponent implements OnInit {
       next: (res: any) => {
         console.log('✅ PRODUCTOS API:', res);
         this.productos = res;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('❌ ERROR GET:', err);

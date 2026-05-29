@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy,  ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -15,6 +15,8 @@ export class Ventas implements OnInit, OnDestroy {
 
   private productoService = inject(ProductoService);
   private ventaService = inject(VentaService);
+  private cdr =
+  inject(ChangeDetectorRef);
 
   productos: any[] = [];
   carrito: any[] = [];
@@ -45,6 +47,8 @@ export class Ventas implements OnInit, OnDestroy {
     this.productoService.getProductos().subscribe({
       next: (res: any) => {
         this.productos = res;
+         // refrescar vista
+  this.cdr.detectChanges();
       },
       error: (err: any) => {
         console.error(err);

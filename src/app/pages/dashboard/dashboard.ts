@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DashboardService } from '../../core/services/dashboard';
@@ -12,6 +12,7 @@ import { DashboardService } from '../../core/services/dashboard';
 export class Dashboard implements OnInit {
 
   private dashboardService = inject(DashboardService);
+  private cdr = inject(ChangeDetectorRef);
 
   data: any = {
     total_productos: 0,
@@ -29,6 +30,8 @@ export class Dashboard implements OnInit {
     this.dashboardService.dashboard$
       .subscribe(data => {
         this.data = data;
+         // forzar actualización de la vista
+        this.cdr.detectChanges();
       });
   }
 }
