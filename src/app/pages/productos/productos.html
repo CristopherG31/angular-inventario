@@ -41,23 +41,24 @@
             [(ngModel)]="nuevoProducto.descripcion"
           >
         </div>
-<div class="col-md-3 mb-2">
-  <select
-    class="form-select"
-    [(ngModel)]="nuevoProducto.categoria_id"
-  >
-    <option [ngValue]="null" disabled>
-      Seleccionar categoría
-    </option>
 
-    <option
-      *ngFor="let categoria of categorias"
-      [ngValue]="categoria.id"
-    >
-      {{ categoria.nombre }}
-    </option>
-  </select>
-</div>
+        <div class="col-md-3 mb-2">
+          <select
+            class="form-select"
+            [(ngModel)]="nuevoProducto.categoria_id"
+          >
+            <option [ngValue]="null" disabled>
+              Seleccionar categoría
+            </option>
+            <option
+              *ngFor="let categoria of categorias"
+              [ngValue]="categoria.id"
+            >
+              {{ categoria.nombre }}
+            </option>
+          </select>
+        </div>
+
         <div class="col-md-3 mb-2">
           <input
             class="form-control"
@@ -85,18 +86,26 @@
           >
         </div>
 
+        <!-- NUEVO CAMPO -->
+        <div class="col-md-3 mb-2">
+          <input
+            class="form-control"
+            placeholder="Stock mínimo"
+            type="number"
+            [(ngModel)]="nuevoProducto.stock_minimo"
+          >
+        </div>
+
         <div class="col-md-3 mb-2">
           <button
             class="btn btn-success w-100"
             (click)="guardarProducto()"
           >
-
             {{
               modoEdicion
               ? 'Actualizar'
               : 'Guardar'
             }}
-
           </button>
         </div>
 
@@ -113,7 +122,6 @@
       <table class="table table-bordered table-hover">
 
         <thead class="table-dark">
-
           <tr>
             <th>Código</th>
             <th>Nombre</th>
@@ -121,9 +129,9 @@
             <th>Categoría</th>
             <th>Precio</th>
             <th>Stock</th>
+            <th>Stock Mínimo</th> 
             <th>Acciones</th>
           </tr>
-
         </thead>
 
         <tbody>
@@ -132,56 +140,32 @@
             producto of productos;
             track producto.id
           ) {
-
             <tr>
-
+              <td>{{ producto.codigo }}</td>
+              <td>{{ producto.nombre }}</td>
+              <td>{{ producto.descripcion }}</td>
+              <td>{{ producto.categoria?.nombre }}</td>
+              <td>$ {{ producto.precio_venta }}</td>
+              <td [ngClass]="{'text-danger fw-bold': producto.stock <= producto.stock_minimo}">
+  {{ producto.stock }}
+</td>
+              <td>{{ producto.stock_minimo }}</td> 
+              
               <td>
-                {{ producto.codigo }}
-              </td>
-
-              <td>
-                {{ producto.nombre }}
-              </td>
-
-              <td>
-                {{ producto.descripcion }}
-              </td>
-
-              <td>
-                {{
-                  producto.categoria?.nombre
-                }}
-              </td>
-
-              <td>
-                $
-                {{ producto.precio_venta }}
-              </td>
-
-              <td>
-                {{ producto.stock }}
-              </td>
-
-              <td>
-
                 <button
                   class="btn btn-warning btn-sm me-2"
                   (click)="editarProducto(producto)"
                 >
                   Editar
                 </button>
-
                 <button
                   class="btn btn-danger btn-sm"
                   (click)="eliminarProducto(producto.id)"
                 >
                   Eliminar
                 </button>
-
               </td>
-
             </tr>
-
           }
 
         </tbody>
